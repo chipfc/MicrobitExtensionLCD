@@ -10,7 +10,7 @@
         "README.md",
         "pxtparts.json",
         "LCD1602_I2C.ts",
-        "parts/LCD1602_I2C.svg"
+        "LCD1602_I2C.svg"
     ],
     "testFiles": [
         "test.ts"
