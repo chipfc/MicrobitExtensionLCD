@@ -1,7 +1,7 @@
 {
   "LCD1602_I2C": {
     "visual": {
-      "image": "parts/LCD1602_I2C.svg",
+      "image": "LCD1602_I2C.svg",
       "width": 227,
       "height": 102,
       "pinDistance": 7.2,
