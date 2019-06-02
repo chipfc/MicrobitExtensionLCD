@@ -16,5 +16,15 @@
         "test.ts"
     ],
     "public": true,
-    "installedVersion": "workspace:66aea109-b6de-4a32-6e18-ad0394fc5647"
+    "installedVersion": "workspace:0f63a3fd-cb99-4b24-b6fb-e106a83d6d25",
+    "yotta": {
+        "config": {
+            "microbit-dal": {
+                "bluetooth": {
+                    "open": 1,
+                    "whitelist": 0
+                }
+            }
+        }
+    }
 }
