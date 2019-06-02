@@ -75,7 +75,8 @@ namespace I2C_LCD1602 {
      * initial LCD, set I2C address. Address is 39/63 for PCF8574/PCF8574A
      * @param Addr is i2c address for LCD, eg: 0, 39, 63. 0 is auto find address
      */
-    //% blockId="I2C_LCD1620_SET_ADDRESS" block="Cho Thổ Phỉ địa chỉ đi nào %addr"
+    //% blockId="I2C_LCD1620_SET_ADDRESS" block="Khởi tạo LCD|| %addr"
+    //% addr.defl=39
     //% weight=100 blockGap=8
     //% parts=LCD1602_I2C trackArgs=0
     export function LcdInit(Addr: number) {
@@ -93,6 +94,121 @@ namespace I2C_LCD1602 {
         cmd(0x0C)
         cmd(0x06)
         cmd(0x01)       // clear
+    }
+
+
+    /**
+     * show a number in LCD at given position
+     * @param n is number will be show, eg: 10, 100, 200
+     * @param x is LCD column position, eg: 0
+     * @param y is LCD row position, eg: 0
+     */
+    //% blockId="I2C_LCD1620_SHOW_NUMBER" block="Hiện số %n|tại x %x|y %y"
+    //% weight=90 blockGap=8
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=1
+    //% parts=LCD1602_I2C trackArgs=0
+    export function ShowNumber(n: number, x: number, y: number): void {
+        let s = n.toString()
+        ShowString(s, x, y)
+    }
+
+    /**
+     * show a string in LCD at given position
+     * @param s is string will be show, eg: "Hello"
+     * @param x is LCD column position, [0 - 15], eg: 0
+     * @param y is LCD row position, [0 - 1], eg: 0
+     */
+    //% blockId="I2C_LCD1620_SHOW_STRING" block="Hiện chữ %s|tại x %x|y %y"
+    //% weight=90 blockGap=8
+    //% x.min=0 x.max=15
+    //% y.min=0 y.max=1
+    //% parts=LCD1602_I2C trackArgs=0
+    export function ShowString(s: string, x: number, y: number): void {
+        let a: number
+
+        if (y > 0)
+            a = 0xC0
+        else
+            a = 0x80
+        a += x
+        cmd(a)
+
+        for (let i = 0; i < s.length; i++) {
+            dat(s.charCodeAt(i))
+        }
+    }
+
+    /**
+     * turn on LCD
+     */
+    //% blockId="I2C_LCD1620_ON" block="Bật LCD"
+    //% weight=81 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function on(): void {
+        cmd(0x0C)
+    }
+
+    /**
+     * turn off LCD
+     */
+    //% blockId="I2C_LCD1620_OFF" block="Tắt LCD"
+    //% weight=80 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function off(): void {
+        cmd(0x08)
+    }
+
+    /**
+     * clear all display content
+     */
+    //% blockId="I2C_LCD1620_CLEAR" block="Xoá màn hình"
+    //% weight=85 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function clear(): void {
+        cmd(0x01)
+    }
+
+    /**
+     * turn on LCD backlight
+     */
+    //% blockId="I2C_LCD1620_BACKLIGHT_ON" block="Bật đèn nền"
+    //% weight=71 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function BacklightOn(): void {
+        BK = 8
+        cmd(0)
+    }
+
+    /**
+     * turn off LCD backlight
+     */
+    //% blockId="I2C_LCD1620_BACKLIGHT_OFF" block="Tắt đèn nền"
+    //% weight=70 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function BacklightOff(): void {
+        BK = 0
+        cmd(0)
+    }
+
+    /**
+     * shift left
+     */
+    //% blockId="I2C_LCD1620_SHL" block="Dịch trái"
+    //% weight=61 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function shl(): void {
+        cmd(0x18)
+    }
+
+    /**
+     * shift right
+     */
+    //% blockId="I2C_LCD1620_SHR" block="Dịch phải"
+    //% weight=60 blockGap=8
+    //% parts=LCD1602_I2C trackArgs=0
+    export function shr(): void {
+        cmd(0x1C)
     }
 
 }
